@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly To-Do List</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #ffecd2, #fcb69f); /* soft gradient background */
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 50px;
+        min-height: 100vh;
+    }
+
+    .todo-container {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 25px rgba(0,0,0,0.3);
+        width: 400px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    input[type="text"] {
+        width: 95%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+
+    .output {
+        margin-top: 25px;
+        padding: 15px;
+        background-color: #e0f7fa; /* soft blue background for output */
+        border-radius: 8px;
+    }
+
+    .output h3 {
+        margin-top: 0;
+        color: #00796b;
+    }
+
+    .day-task {
+        margin-bottom: 8px;
+    }
+</style>
+</head>
+<body>
+<div class="todo-container">
+    <h2>Weekly To-Do List</h2>
+    <form id="todoForm">
+        <input type="text" id="name" placeholder="Enter your name" required>
+
+        <label for="monday">Monday Task</label>
+        <input type="text" id="monday" placeholder="Task for Monday">
+
+        <label for="tuesday">Tuesday Task</label>
+        <input type="text" id="tuesday" placeholder="Task for Tuesday">
+
+        <label for="wednesday">Wednesday Task</label>
+        <input type="text" id="wednesday" placeholder="Task for Wednesday">
+
+        <label for="thursday">Thursday Task</label>
+        <input type="text" id="thursday" placeholder="Task for Thursday">
+
+        <label for="friday">Friday Task</label>
+        <input type="text" id="friday" placeholder="Task for Friday">
+
+        <label for="saturday">Saturday Task</label>
+        <input type="text" id="saturday" placeholder="Task for Saturday">
+
+        <label for="sunday">Sunday Task</label>
+        <input type="text" id="sunday" placeholder="Task for Sunday">
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="output" id="output" style="display:none;">
+        <h3>Your Weekly Tasks</h3>
+        <div id="taskList"></div>
+    </div>
+</div>
+
+<script>
+document.getElementById('todoForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+    const tasks = {};
+
+    days.forEach(day => {
+        const task = document.getElementById(day.toLowerCase()).value.trim();
+        tasks[day] = task ? task : "No task assigned";
+    });
+
+    // Display tasks
+    const taskListDiv = document.getElementById('taskList');
+    taskListDiv.innerHTML = `<strong>${name}'s Weekly Schedule:</strong><br>`;
+    days.forEach(day => {
+        const div = document.createElement('div');
+        div.className = "day-task";
+        div.textContent = `${day}: ${tasks[day]}`;
+        taskListDiv.appendChild(div);
+    });
+
+    document.getElementById('output').style.display = 'block';
+
+    document.getElementById('todoForm').reset();
+});
+</script>
+</body>
+</html>
